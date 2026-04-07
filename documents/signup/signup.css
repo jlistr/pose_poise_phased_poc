@@ -1,0 +1,145 @@
+.signup-page-container {
+  min-height: 100vh;
+  background-color: #FAF9F7;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: #1A1A1A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.signup-content-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.signup-content-center {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.signup-logo-link {
+  display: block;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  text-decoration: none;
+  color: #1A1A1A;
+}
+
+.signup-logo-center {
+  text-align: center;
+}
+
+.success-icon-container {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(196, 164, 132, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  font-size: 28px;
+}
+
+.auth-heading {
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+.auth-heading-large {
+  font-size: 36px;
+}
+
+.auth-subheading {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(26, 26, 26, 0.6);
+}
+
+.success-paragraph {
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-container {
+  position: relative;
+}
+
+.password-input {
+  width: 100%;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: rgba(26, 26, 26, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: rgba(26, 26, 26, 0.7);
+}
+
+.auth-error-message {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: #D64545;
+  text-align: center;
+}
+
+.auth-terms {
+  margin-top: 24px;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: rgba(26, 26, 26, 0.4);
+  line-height: 1.6;
+}
+
+.auth-footer-links {
+  margin-top: 24px;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: rgba(26, 26, 26, 0.6);
+}
+
+.decorative-divider {
+  width: 40px;
+  height: 1px;
+  background: #C4A484;
+  margin: 48px auto 0;
+}
+
+.back-to-signin {
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+}

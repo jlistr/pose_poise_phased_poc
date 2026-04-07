@@ -1,0 +1,384 @@
+@reference "tailwindcss";
+
+/* =========================================================================
+   POSE & POISE - LANDING PAGE STYLES (FROM INLINE & EMBEDDED)
+========================================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap");
+
+/* Page Wrapper */
+.landing-page-wrapper {
+  @apply min-h-screen bg-[#faf9f7] text-[#1a1a1a] overflow-hidden; /* colors.background.primary */
+  font-family: "Cormorant Garamond", serif; /* typography.fontFamily.display */ /* colors.text.primary */
+}
+
+/* -------------------------------------------------------------------------
+   Animations
+------------------------------------------------------------------------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-up {
+  @apply animate-[fadeUp_1s_ease-out_forwards];
+}
+.fade-in {
+  @apply animate-[fadeIn_1.2s_ease-out_forwards];
+}
+
+/* Sequence Delays */
+.delay-1 {
+  @apply opacity-0;
+  animation-delay: 0.2s;
+}
+.delay-2 {
+  @apply opacity-0;
+  animation-delay: 0.4s;
+}
+.delay-3 {
+  @apply opacity-0;
+  animation-delay: 0.6s;
+}
+.delay-4 {
+  @apply opacity-0;
+  animation-delay: 0.8s;
+}
+.delay-5 {
+  @apply opacity-0;
+  animation-delay: 1s;
+}
+
+/* Scroll Based Animations (Observer Classes) */
+.scroll-fade-up {
+  opacity: 0;
+  translate: 0 2.5rem;
+  transition: opacity 0.8s ease-out, translate 0.8s ease-out;
+}
+.scroll-fade-up.visible {
+  opacity: 1;
+  translate: 0 0;
+}
+.scroll-fade-in {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+.scroll-fade-in.visible {
+  opacity: 1;
+}
+.scroll-scale-in {
+  opacity: 0;
+  scale: 0.95;
+  transition: opacity 0.6s ease-out, scale 0.6s ease-out;
+}
+.scroll-scale-in.visible {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Children Stagger Delays */
+.stagger-1 {
+  @apply delay-[0.1s];
+}
+.stagger-2 {
+  @apply delay-[0.2s];
+}
+.stagger-3 {
+  @apply delay-[0.3s];
+}
+.stagger-4 {
+  @apply delay-[0.4s];
+}
+
+/* -------------------------------------------------------------------------
+   Global Component Overrides
+------------------------------------------------------------------------- */
+.pp-button:hover {
+  @apply -translate-y-0.5 shadow-[0_10px_40px_rgba(196,164,132,0.3)];
+}
+.pp-button-accent {
+  @apply inline-block text-[13px] tracking-[2px] uppercase text-[#2d2d2d] no-underline transition-all duration-[0.3s] ease-[ease] px-8 py-4 hover:text-[#fdfbf9];
+  font-family: "Outfit", sans-serif; /* fontSize.bodySmall */ /* letterSpacing.wider */ /* md xl */
+  background: #fdfbf9; /* colors.cream */ /* colors.charcoal */
+}
+.pp-button-accent:hover {
+  background: #2d2d2d !important; /* colors.charcoal */ /* colors.cream */
+}
+.pp-input:focus {
+  @apply border-[#c4a484]; /* colors.camel */
+}
+.pp-input::placeholder {
+  @apply text-[rgba(26,26,26,0.4)] tracking-[1px]; /* colors.text.muted */
+}
+.pp-feature-card:hover {
+  @apply translate-y-[-5px] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border-[#d8be9f]; /* effects.shadow.cardHover */ /* colors.accent.hover */
+}
+.pp-nav-link:hover {
+  @apply text-[#c4a484]; /* colors.camel */
+}
+
+/* -------------------------------------------------------------------------
+   Section Spacing & Constraints
+------------------------------------------------------------------------- */
+.section-padding {
+  @apply px-12 py-[120px]; /* 3xl 2xl */
+}
+.section-container {
+  @apply max-w-[1200px] mx-auto my-0;
+}
+
+/* -------------------------------------------------------------------------
+   Hero Section
+------------------------------------------------------------------------- */
+.hero-section {
+  @apply min-h-[auto] flex items-start relative pt-[180px] pb-[120px] px-12; /* 2xl 3xl */
+}
+.hero-image-container {
+  @apply absolute w-[clamp(260px,25vw,380px)] h-[clamp(360px,45vh,520px)] z-0 overflow-hidden right-[5%] top-[160px]; /* zIndex.base */
+}
+.hero-image-overlay {
+  @apply absolute z-[2] pointer-events-none inset-0;
+  background: linear-gradient(
+    135deg,
+    rgba(196, 164, 132, 0.08) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(253, 251, 249, 0.6) 100%
+  );
+}
+.hero-image-frame {
+  @apply absolute border z-[1] pointer-events-none border-solid border-[rgba(196,164,132,0.3)] -inset-2; /* colors.accent.light */
+}
+.hero-image {
+  @apply w-full h-full object-cover object-[center_top] saturate-[0.85] contrast-[0.95] opacity-90;
+}
+.hero-decorative-fallback {
+  @apply absolute w-[280px] h-[380px] z-0 right-[8%] top-40;
+  background: linear-gradient(
+    135deg,
+    rgba(196, 164, 132, 0.08) 0%,
+    rgba(196, 164, 132, 0.15) 100%
+  );
+}
+.decorative-circle {
+  @apply absolute w-[120px] h-[120px] border z-0 rounded-full border-solid border-[rgba(196,164,132,0.3)] left-[5%] bottom-[10%]; /* colors.accent.light */ /* radius.full */
+}
+.hero-content {
+  @apply max-w-[900px] relative z-[1]; /* zIndex.above */
+}
+.hero-heading {
+  @apply text-[clamp(48px,8vw,96px)] font-[300] leading-[1.05] tracking-[-1px] mb-[40px]; /* fontSize.heroH1 */ /* fontWeight.light */ /* lineHeight.tight */ /* xl */ /* letterSpacing.tight */
+}
+.hero-subtitle {
+  @apply text-[17px] font-[300] leading-[1.8] text-[rgba(26,26,26,0.7)] max-w-[480px] mb-[48px];
+  font-family: "Outfit", sans-serif; /* fontSize.bodyLarge */ /* fontWeight.light */ /* lineHeight.loose */ /* colors.text.secondary */ /* 2xl */
+}
+.hero-social-proof {
+  @apply text-[12px] text-[rgba(26,26,26,0.4)] mt-[24px];
+  font-family: "Outfit", sans-serif; /* fontSize.label */ /* colors.text.muted */ /* md */
+}
+
+/* -------------------------------------------------------------------------
+   Features Section
+------------------------------------------------------------------------- */
+.features-section {
+  background: #ffffff; /* colors.background.section */
+}
+.features-header {
+  @apply flex justify-between items-end flex-wrap gap-8 mb-12; /* 2xl */ /* xl */
+}
+.features-heading {
+  @apply text-[clamp(36px,5vw,56px)] font-light leading-[1.15]; /* fontSize.featureH2 */ /* lineHeight.snug */
+}
+.features-description {
+  @apply text-[15px] font-light text-[rgba(26,26,26,0.6)] max-w-[360px] leading-[1.8];
+  font-family: "Outfit", sans-serif; /* fontSize.body */ /* colors.text.tertiary */
+}
+.features-grid {
+  @apply grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6; /* md */
+}
+
+/* -------------------------------------------------------------------------
+   Pricing Section
+------------------------------------------------------------------------- */
+.pricing-section {
+  background: #faf9f7; /* colors.background.primary */
+}
+.pricing-header {
+  @apply text-center mb-12; /* 2xl */
+}
+.pricing-heading {
+  @apply text-[clamp(36px,5vw,56px)] font-light leading-[1.15] mb-4; /* md */
+}
+.pricing-subtitle {
+  @apply text-[15px] font-light text-[rgba(26,26,26,0.7)] max-w-[480px] mx-auto my-0;
+  font-family: "Outfit", sans-serif;
+}
+.pricing-grid {
+  @apply grid grid-cols-[repeat(3,1fr)] gap-10 items-stretch; /* lg */
+}
+.pp-pricing-card {
+  @apply flex flex-col relative border p-8 border-solid border-[rgba(33,37,41,0.05)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)];
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* xl */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* colors.background.card */ /* colors.border.subtle */
+}
+.pp-pricing-card.highlighted {
+  @apply border-[none];
+  background: #2d2d2d; /* colors.charcoal */
+}
+.pricing-badge {
+  @apply absolute -translate-x-2/4 text-[#fdfbf9] text-[11px] tracking-[2px] uppercase px-4 py-1.5 left-2/4 -top-3;
+  background: #c4a484; /* colors.camel */ /* colors.cream */
+  font-family: "Outfit", sans-serif; /* fontSize.caption */ /* letterSpacing.wider */
+}
+.pricing-card-heading {
+  @apply text-2xl font-normal text-[#1a1a1a] mb-2;
+  font-family: "Cormorant Garamond", serif; /* fontSize.cardH3 */ /* regular */ /* xs */
+}
+.highlighted .pricing-card-heading {
+  @apply text-[#fdfbf9];
+}
+.pricing-card-desc {
+  @apply text-[13px] text-[rgba(26,26,26,0.7)] mb-10;
+  font-family: "Outfit", sans-serif; /* fontSize.bodySmall */ /* lg */
+}
+.highlighted .pricing-card-desc {
+  @apply text-[rgba(250,247,242,0.7)];
+}
+.pricing-price-group {
+  @apply flex items-baseline gap-1;
+}
+.pricing-price-value {
+  @apply text-5xl font-light text-[#1a1a1a];
+  font-family: "Cormorant Garamond", serif;
+}
+.highlighted .pricing-price-value {
+  @apply text-[#fdfbf9];
+}
+.pricing-price-unit {
+  @apply text-[15px] text-[rgba(26,26,26,0.4)];
+  font-family: "Outfit", sans-serif; /* colors.text.muted */
+}
+.highlighted .pricing-price-unit {
+  @apply text-[rgba(250,247,242,0.7)];
+}
+.pricing-yearly-info {
+  @apply text-[13px] text-[#c4a484] mt-2;
+  font-family: "Outfit", sans-serif; /* xs */
+}
+.pricing-note {
+  @apply text-[11px] text-[rgba(26,26,26,0.4)] italic mt-2;
+  font-family: "Outfit", sans-serif;
+}
+.highlighted .pricing-note {
+  @apply text-[rgba(250,247,242,0.6)];
+}
+.pp-pricing-cta {
+  @apply block text-center text-[13px] tracking-[1px] uppercase text-[#fdfbf9] no-underline transition-all duration-[0.3s] ease-[ease] mb-10 px-10 py-4 hover:opacity-90 hover:-translate-y-px;
+  font-family: "Outfit", sans-serif; /* letterSpacing.wide */ /* md lg */
+  background: #2d2d2d;
+}
+.highlighted .pp-pricing-cta {
+  @apply text-[#2d2d2d];
+  background: #fdfbf9;
+}
+.pricing-divider {
+  @apply h-px mb-10;
+  background: rgba(33, 37, 41, 0.1); /* colors.border.divider */
+}
+.highlighted .pricing-divider {
+  background: rgba(250, 247, 242, 0.2);
+}
+.pricing-features-list {
+  @apply flex-1 flex flex-col gap-3 m-0 p-0;
+  list-style: none; /* sm */
+}
+.pricing-feature-item {
+  @apply flex items-start gap-3 text-[13px] text-[rgba(26,26,26,0.7)];
+  font-family: "Outfit", sans-serif;
+}
+.highlighted .pricing-feature-item {
+  @apply text-[rgba(250,247,242,0.9)];
+}
+.pricing-feature-icon {
+  @apply shrink-0 w-[18px] h-[18px] flex items-center justify-center text-[#c4a484]; /* colors.camel */
+}
+
+/* -------------------------------------------------------------------------
+   Bottom CTA & Contact Section
+------------------------------------------------------------------------- */
+.cta-section {
+  @apply text-[#FAF9F7] text-center;
+  background: #151515; /* colors.background.dark */ /* colors.textLight.primary */
+}
+.cta-heading {
+  @apply text-[clamp(32px,4vw,42px)] font-light leading-[1.15] mb-4; /* sectionH2 */
+}
+.cta-subtitle {
+  @apply text-[15px] font-light text-[rgba(250,247,242,0.8)] mb-12;
+  font-family: "Outfit", sans-serif; /* colors.textLight.secondary */
+}
+.contact-section {
+  background: #faf9f7;
+}
+.contact-container {
+  @apply max-w-[600px] mx-auto my-0;
+}
+
+/* -------------------------------------------------------------------------
+   Media Queries (Responsiveness)
+------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hero-section {
+    @apply pt-[140px] pb-12 px-8;
+  }
+  .hero-image-container {
+    @apply w-[clamp(200px,30vw,300px)] h-[clamp(280px,40vh,400px)];
+  }
+}
+@media (max-width: 768px) {
+  .hero-section {
+    @apply pt-[120px] pb-10 px-6;
+  }
+  .section-padding {
+    @apply px-6 py-12;
+  }
+  .nav-links {
+    @apply hidden;
+  }
+  .hero-form {
+    @apply flex-col items-stretch;
+  }
+  .pp-input {
+    @apply max-w-full;
+  }
+  .features-header {
+    @apply flex-col items-start;
+  }
+  .hero-image-container {
+    @apply hidden;
+  }
+  .pricing-grid {
+    @apply grid-cols-[1fr];
+  }
+  .decorative-circle {
+    @apply hidden;
+  }
+}
