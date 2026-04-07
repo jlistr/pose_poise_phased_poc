@@ -78,7 +78,26 @@ export default function PortfolioPreview({ username }: PortfolioPreviewProps) {
         <div style={{ fontFamily: fonts.heading, fontSize: "24px", letterSpacing: "0.1em" }}>
           {data.profile.displayName || username}
         </div>
-        <div style={{ display: "flex", gap: "1rem", fontSize: "14px" }}>
+        <div style={{ display: "flex", gap: "1.5rem", fontSize: "14px", alignItems: "center" }}>
+          {/* PoC Upgrade Tunnel */}
+          <a 
+            href="/upgrade" 
+            style={{ 
+              fontWeight: 600, 
+              color: template.bgColor, 
+              backgroundColor: template.textColor,
+              textDecoration: "none", 
+              padding: "6px 16px", 
+              borderRadius: "20px",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              transition: "transform 0.2s ease"
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            Upgrade to Pro
+          </a>
+          
           {data.profile.instagram && <a href={`https://instagram.com/${data.profile.instagram}`} target="_blank" rel="noreferrer" style={{color: "inherit", textDecoration: "none"}}>Instagram</a>}
           {data.profile.tiktok && <a href={`https://tiktok.com/@${data.profile.tiktok}`} target="_blank" rel="noreferrer" style={{color: "inherit", textDecoration: "none"}}>TikTok</a>}
         </div>

@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { colors, fonts } from "@/components/onboarding/types";
 
 export default async function DashboardPage() {
@@ -11,6 +12,17 @@ export default async function DashboardPage() {
 
   if (!user) {
     redirect("/login");
+  }
+
+  // 1. Trapdoor Sequence: Read Database explicitly to determine true Onboarding State
+  const { data: profile } = await (supabase as any)
+    .from("profiles")
+    .select("onboarding_completed")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile?.onboarding_completed) {
+    redirect("/onboarding");
   }
 
   return (
@@ -79,10 +91,10 @@ export default async function DashboardPage() {
             ✓
           </div>
           <h1 style={{ fontFamily: fonts.heading, fontSize: "2rem", marginBottom: "1rem", color: colors.charcoal }}>
-            Zero-to-Auth PoC Verified!
+            Portfolio Dashboard
           </h1>
           <p style={{ color: colors.textSecondary, marginBottom: "2rem" }}>
-            You are securely authenticated into your active session via Supabase Magic Link.
+            You have successfully completed the onboarding loop and generated your public profile.
           </p>
 
           <div style={{ backgroundColor: "#F9FAFB", padding: "1rem", borderRadius: "6px", textAlign: "left", fontSize: "14px", fontFamily: "monospace", color: "#374151" }}>
@@ -90,13 +102,19 @@ export default async function DashboardPage() {
             {user.email}
           </div>
           
-          <div style={{ marginTop: "2rem" }}>
-            <a 
-              href="/onboarding"
+          <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: `1px solid ${colors.border}` }}>
+            <h3 style={{ fontFamily: fonts.heading, fontSize: "1.2rem", marginBottom: "1rem" }}>
+              Unlock Professional Tools
+            </h3>
+            <p style={{ color: colors.textSecondary, fontSize: "14px", marginBottom: "1.5rem" }}>
+              Expand your digital footprint. Upgrade to the Professional tier to unlock template selections, PDF exports, and an extended 50-image portfolio capacity.
+            </p>
+            <Link 
+              href="/upgrade"
               style={{
                 display: "inline-block",
                 padding: "0.875rem 2rem",
-                backgroundColor: "var(--color-brand-gold)",
+                backgroundColor: colors.charcoal,
                 color: colors.white,
                 textDecoration: "none",
                 borderRadius: "6px",
@@ -106,8 +124,8 @@ export default async function DashboardPage() {
                 transition: "opacity 0.2s",
               }}
             >
-              PROCEED TO ONBOARDING WIZARD →
-            </a>
+              UPGRADE SUBSCRIPTION PLAN →
+            </Link>
           </div>
         </div>
       </main>

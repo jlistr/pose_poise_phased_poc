@@ -6,6 +6,8 @@ import {
 } from "react";
 import type { ButtonVariant } from "@/types";
 
+export * from "./PricingCards";
+
 /**
  * Button Component
  */

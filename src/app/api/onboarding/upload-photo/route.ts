@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
-    const file = formData.get("file") as File;
-    const tempId = formData.get("tempId") as string;
+    const file = formData.get("file");
     const currentCount = parseInt((formData.get("currentCount") as string) || "0", 10);
     
     if (currentCount >= 10) {
@@ -13,15 +12,21 @@ export async function POST(request: Request) {
         { status: 403 }
       );
     }
+
+    if (!file) {
+      return NextResponse.json({ error: "No physical file buffer was received by the API layer." }, { status: 400 });
+    }
     
-    // MOCK: pretend we uploaded the photo successfully and returned a URL
+    // MOCK: Return proper Object structure expected by the front-end PhotoUploadSuccessResponse type.
     return NextResponse.json({
       success: true,
-      url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
-      id: tempId || Date.now().toString(),
+      photo: {
+        id: "mock_photo_id_" + Date.now().toString(),
+        url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800",
+      }
     });
-  } catch (error) {
-    console.error("Upload error:", error);
-    return NextResponse.json({ error: "Failed to upload photo" }, { status: 500 });
+  } catch (error: any) {
+    console.error("API ROUTE UPLOAD CRASH:", error);
+    return NextResponse.json({ error: error?.message || "Failed to parse upload request entirely." }, { status: 500 });
   }
 }

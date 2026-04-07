@@ -8,6 +8,7 @@ import { Navbar, Footer, OnboardingBannerAuto } from "@/components/layout";
 import { ContactForm } from "@/components/forms";
 import { EmailSignupForm } from "@/components/auth/EmailSignupForm";
 import { CheckIcon } from "@/components/icons/Icons";
+import { PricingCards } from "@/components/ui/PricingCards";
 import "./landing.css";
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -31,68 +32,6 @@ const FEATURES: Feature[] = [
     num: "03",
     title: "Agency Discovery",
     desc: "Get noticed by agencies and brands actively searching for fresh talent.",
-  },
-];
-
-const PRICING_TIERS = [
-  {
-    name: "Free",
-    price: 0,
-    yearlyPrice: 0,
-    yearlySavings: 0,
-    description: "Perfect for getting started",
-    cta: "Get Started",
-    ctaHref: "/signup",
-    highlighted: false,
-    features: [
-      "Up to 10 portfolio images",
-      "Subdomain portfolio URL",
-      "Basic comp card generator",
-      "Portfolio analytics",
-      "Read community posts",
-    ],
-    note: "No credit card required",
-  },
-  {
-    name: "Professional",
-    price: 20,
-    yearlyPrice: 200,
-    yearlySavings: 40,
-    description: "For serious models building their career",
-    cta: "Start Free Trial",
-    ctaHref: "/signup?plan=professional",
-    highlighted: true,
-    features: [
-      "Everything in Free",
-      "Up to 50 portfolio images",
-      "Choose from layout templates",
-      "Choose from color themes",
-      "All comp card templates",
-      "PDF export",
-      "Priority support",
-      "Read & write community posts",
-    ],
-    note: null,
-  },
-  {
-    name: "Deluxe",
-    price: 30,
-    yearlyPrice: 300,
-    yearlySavings: 60,
-    description: "For professionals who want it all",
-    cta: "Start Free Trial",
-    ctaHref: "/signup?plan=deluxe",
-    highlighted: false,
-    features: [
-      "Everything in Professional",
-      "Unlimited portfolio images",
-      "Custom domain support",
-      "Central message hub",
-      "SMS notifications",
-      "Calendar & event planning",
-      "Promote photographers & agencies",
-    ],
-    note: null,
   },
 ];
 
@@ -239,80 +178,7 @@ export default function LandingPage() {
           </div>
 
           {/* Pricing Cards */}
-          <div className="pricing-grid">
-            {PRICING_TIERS.map((tier, index) => (
-              <div
-                key={tier.name}
-                className={`pp-pricing-card scroll-scale-in stagger-${index + 1} ${tier.highlighted ? 'highlighted' : ''}`}
-              >
-                {/* Popular Badge */}
-                {tier.highlighted && (
-                  <div className="pricing-badge">
-                    Most Popular
-                  </div>
-                )}
-
-                {/* Tier Name */}
-                <h3 className="pricing-card-heading">
-                  {tier.name}
-                </h3>
-
-                {/* Description */}
-                <p className="pricing-card-desc">
-                  {tier.description}
-                </p>
-
-                {/* Price */}
-                <div className="mb-10">
-                  <div className="pricing-price-group">
-                    <span className="pricing-price-value">
-                      ${tier.price}
-                    </span>
-                    <span className="pricing-price-unit">
-                      /month
-                    </span>
-                  </div>
-
-                  {/* Yearly pricing */}
-                  {tier.yearlyPrice > 0 && (
-                    <p className="pricing-yearly-info">
-                      ${tier.yearlyPrice}/year — Save ${tier.yearlySavings}
-                    </p>
-                  )}
-
-                  {/* Note */}
-                  {tier.note && (
-                    <p className="pricing-note">
-                      {tier.note}
-                    </p>
-                  )}
-                </div>
-
-                {/* CTA Button */}
-                <Link
-                  href={tier.ctaHref}
-                  className="pp-pricing-cta"
-                >
-                  {tier.cta}
-                </Link>
-
-                {/* Divider */}
-                <div className="pricing-divider" />
-
-                {/* Features List */}
-                <ul className="pricing-features-list">
-                  {tier.features.map((feature, index) => (
-                    <li key={index} className="pricing-feature-item">
-                      <span className="pricing-feature-icon">
-                        <CheckIcon size={16} />
-                      </span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <PricingCards isUpgradeFlow={false} />
         </div>
       </section>
 
