@@ -7,7 +7,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ clientSecret }: { clientSecret?: string }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -23,7 +23,10 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const isSetup = clientSecret?.startsWith('seti_');
+    const confirmMethod = isSetup ? stripe.confirmSetup : stripe.confirmPayment;
+
+    const { error } = await confirmMethod({
       elements,
       confirmParams: {
         // Return URL must resolve fully, even pointing back to localhost inside Next

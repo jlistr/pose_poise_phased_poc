@@ -25,6 +25,14 @@ export default async function DashboardPage() {
     redirect("/onboarding");
   }
 
+  const { data: features } = await (supabase as any)
+    .from("user_features")
+    .select("tier")
+    .eq("id", user.id)
+    .single();
+
+  const isPro = features?.tier === "pro";
+
   return (
     <div
       style={{
@@ -104,28 +112,50 @@ export default async function DashboardPage() {
           
           <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: `1px solid ${colors.border}` }}>
             <h3 style={{ fontFamily: fonts.heading, fontSize: "1.2rem", marginBottom: "1rem" }}>
-              Unlock Professional Tools
+              {isPro ? "Professional Tools Unlocked" : "Unlock Professional Tools"}
             </h3>
             <p style={{ color: colors.textSecondary, fontSize: "14px", marginBottom: "1.5rem" }}>
-              Expand your digital footprint. Upgrade to the Professional tier to unlock template selections, PDF exports, and an extended 50-image portfolio capacity.
+              {isPro 
+                ? "Your digital footprint is expanding. You now have access to premium template selections, PDF exports, and an extended 50-image portfolio capacity."
+                : "Expand your digital footprint. Upgrade to the Professional tier to unlock template selections, PDF exports, and an extended 50-image portfolio capacity."}
             </p>
-            <Link 
-              href="/upgrade"
-              style={{
-                display: "inline-block",
-                padding: "0.875rem 2rem",
-                backgroundColor: colors.charcoal,
-                color: colors.white,
-                textDecoration: "none",
-                borderRadius: "6px",
-                fontSize: "14px",
-                fontWeight: 600,
-                letterSpacing: "0.05em",
-                transition: "opacity 0.2s",
-              }}
-            >
-              UPGRADE SUBSCRIPTION PLAN →
-            </Link>
+            {isPro ? (
+              <button 
+                disabled
+                style={{
+                  display: "inline-block",
+                  padding: "0.875rem 2rem",
+                  backgroundColor: "#E5E7EB",
+                  color: "#9CA3AF",
+                  border: "none",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  cursor: "not-allowed"
+                }}
+              >
+                UPGRADE COMPLETE
+              </button>
+            ) : (
+              <Link 
+                href="/upgrade"
+                style={{
+                  display: "inline-block",
+                  padding: "0.875rem 2rem",
+                  backgroundColor: colors.charcoal,
+                  color: colors.white,
+                  textDecoration: "none",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  transition: "opacity 0.2s",
+                }}
+              >
+                UPGRADE SUBSCRIPTION PLAN →
+              </Link>
+            )}
           </div>
         </div>
       </main>
