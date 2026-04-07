@@ -5,7 +5,8 @@ import Link from "next/link";
 import { FeatureCard, SectionLabel } from "@/components/ui";
 import type { Feature } from "@/types";
 import { Navbar, Footer, OnboardingBannerAuto } from "@/components/layout";
-import { EmailSignupForm, ContactForm } from "@/components/forms";
+import { ContactForm } from "@/components/forms";
+import { EmailSignupForm } from "@/components/auth/EmailSignupForm";
 import { CheckIcon } from "@/components/icons/Icons";
 import "./landing.css";
 

@@ -71,12 +71,24 @@ CREATE TABLE public.user_features (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+ALTER TABLE public.user_features ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view own features." 
+ON public.user_features FOR SELECT 
+USING (auth.uid() = id);
+
 CREATE TABLE public.onboarding_progress (
   id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
   current_step TEXT DEFAULT 'template',
   completed BOOLEAN DEFAULT FALSE,
   last_updated TIMESTAMPTZ DEFAULT NOW()
 );
+
+ALTER TABLE public.onboarding_progress ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can view and update own onboarding progress." 
+ON public.onboarding_progress FOR ALL 
+USING (auth.uid() = id);
 
 -- 2. Create the Trigger to auto-populate profiles on user registration
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -100,7 +112,7 @@ BEGIN
 
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- Bind Trigger to auth.users
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
@@ -118,8 +130,8 @@ INSERT INTO storage.buckets (id, name, public)
 VALUES ('portfolio-images', 'portfolio-images', true)
 ON CONFLICT (id) DO NOTHING;
 
--- Enable RLS on the Storage Objects table
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+-- Enable RLS on the Storage Objects table (Already natively enabled by Supabase)
+-- ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
 
 -- 4. Set standard Storage RLS (Standard CRUD)
 -- Allow public to READ images
@@ -191,7 +203,7 @@ BEGIN
 
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- Bind quota limit Trigger directly to Storage INSERTS
 DROP TRIGGER IF EXISTS enforce_portfolio_quota ON storage.objects;
