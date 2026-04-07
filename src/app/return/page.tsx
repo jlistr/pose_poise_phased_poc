@@ -12,42 +12,59 @@ function ReturnContent() {
   const router = useRouter();
   
   const paymentIntentClientSecret = searchParams.get("payment_intent_client_secret");
+  const setupIntentClientSecret = searchParams.get("setup_intent_client_secret");
+  const clientSecret = paymentIntentClientSecret || setupIntentClientSecret;
+
   const [status, setStatus] = useState<string>("loading");
 
   useEffect(() => {
-    if (!paymentIntentClientSecret) {
+    if (!clientSecret) {
       router.push("/dashboard");
       return;
     }
 
-    stripePromise.then(stripe => {
+    stripePromise.then(async (stripe) => {
       if (!stripe) {
         setStatus("error");
         return;
       }
-      
-      stripe.retrievePaymentIntent(paymentIntentClientSecret).then(({ paymentIntent, error }) => {
-        if (error) {
-          setStatus("error");
-        } else {
-          switch (paymentIntent?.status) {
-            case 'succeeded':
-              setStatus('complete');
-              break;
-            case 'processing':
-              setStatus('open');
-              break;
-            case 'requires_payment_method':
-              setStatus('error');
-              break;
-            default:
-              setStatus('error');
-              break;
+
+      const isSetup = clientSecret.startsWith("seti_");
+      let stripeStatus: string | undefined;
+
+      if (isSetup) {
+        const { setupIntent, error } = await stripe.retrieveSetupIntent(clientSecret);
+        if (error) { setStatus("error"); return; }
+        stripeStatus = setupIntent?.status;
+      } else {
+        const { paymentIntent, error } = await stripe.retrievePaymentIntent(clientSecret);
+        if (error) { setStatus("error"); return; }
+        stripeStatus = paymentIntent?.status;
+      }
+
+      if (stripeStatus === 'succeeded') {
+        // Confirm the subscription in the database immediately
+        const subscriptionId = sessionStorage.getItem('pp_subscription_id');
+        if (subscriptionId) {
+          try {
+            await fetch('/api/confirm-subscription', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ subscriptionId }),
+            });
+            sessionStorage.removeItem('pp_subscription_id');
+          } catch (e) {
+            console.error('Failed to confirm subscription in DB:', e);
           }
         }
-      });
+        setStatus('complete');
+      } else if (stripeStatus === 'processing') {
+        setStatus('open');
+      } else {
+        setStatus('error');
+      }
     });
-  }, [paymentIntentClientSecret, router]);
+  }, [clientSecret, router]);
 
   return (
     <div className="min-h-[100vh] bg-[#FAFAF9] py-20 px-6 flex flex-col items-center justify-center">

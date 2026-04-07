@@ -17,7 +17,7 @@ export default async function DashboardPage() {
   // 1. Trapdoor Sequence: Read Database explicitly to determine true Onboarding State
   const { data: profile } = await (supabase as any)
     .from("profiles")
-    .select("onboarding_completed")
+    .select("onboarding_completed, display_name, username")
     .eq("id", user.id)
     .single();
 
@@ -107,7 +107,9 @@ export default async function DashboardPage() {
 
           <div style={{ backgroundColor: "#F9FAFB", padding: "1rem", borderRadius: "6px", textAlign: "left", fontSize: "14px", fontFamily: "monospace", color: "#374151" }}>
             <strong>Session Authenticated Email:</strong><br />
-            {user.email}
+            {user.email}<br /><br />
+            <strong>Authenticated Profile:</strong><br />
+            {profile?.display_name || profile?.username || "Unnamed User"}
           </div>
           
           <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: `1px solid ${colors.border}` }}>

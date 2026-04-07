@@ -29,6 +29,9 @@ export default function CheckoutPage() {
       .then((data) => {
         if (data.clientSecret) {
           setClientSecret(data.clientSecret);
+          if (data.subscriptionId) {
+            sessionStorage.setItem('pp_subscription_id', data.subscriptionId);
+          }
         } else {
           setError("Failed to generate secure context locally.");
         }
@@ -120,7 +123,7 @@ export default function CheckoutPage() {
             </div>
             
             <Elements options={{ clientSecret, appearance }} stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm clientSecret={clientSecret} />
             </Elements>
           </div>
         ) : (
