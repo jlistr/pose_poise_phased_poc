@@ -4,7 +4,6 @@
 
 // Step Types (ordered: template → photos → profile → services → about)
 export type OnboardingStep =
-  | "template"
   | "photos"
   | "profile"
   | "services"

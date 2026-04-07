@@ -5,6 +5,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { colors, fonts } from "../types";
+import { PosePoiseLogo } from "../../common/PosePoiseLogo";
 
 // ============================================================================
 // Icons
@@ -109,16 +110,7 @@ export function OnboardingLayout({
           borderBottom: `1px solid ${colors.border}`,
         }}
       >
-        <div
-          style={{
-            fontFamily: fonts.heading,
-            fontSize: "14px",
-            letterSpacing: "0.2em",
-            color: colors.textPrimary,
-          }}
-        >
-          POSE & POISE
-        </div>
+        <PosePoiseLogo />
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <button
             type="button"
@@ -322,9 +314,7 @@ export function OnboardingLayout({
           color: colors.textMuted,
         }}
       >
-        <span style={{ fontFamily: fonts.heading, letterSpacing: "0.15em" }}>
-          POSE & POISE
-        </span>
+        <PosePoiseLogo className="scale-75 origin-left opacity-60" />
         <div style={{ display: "flex", gap: "1.5rem" }}>
           <a
             href="/pricing"

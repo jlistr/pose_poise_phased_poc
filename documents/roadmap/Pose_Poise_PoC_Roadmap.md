@@ -74,7 +74,7 @@ Building primary user-facing features for portfolio and professional asset creat
 ### Phase 3 & 4: Portfolio Management
 
   * **Creation & Preview**: PRO users can select images and choose from layout templates (grid, editorial, lookbook).
-  * **Publishing**: Includes a public URL (e.g., `poseandpoise.studio/username`) with SEO meta tags and a draft/publish toggle.
+  * **Publishing**: Includes a public URL (e.g., `username.poseandpoise.studio`) with SEO meta tags and a draft/publish toggle.
 
 ### Phase 5 & 6: Composite Cards
 

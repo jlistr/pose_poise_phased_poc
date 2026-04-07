@@ -2,6 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { colors, fonts } from "@/components/onboarding/types";
+import { PosePoiseLogo } from "@/components/common/PosePoiseLogo";
+import { PublishToggle } from "@/components/dashboard/PublishToggle";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -17,7 +19,7 @@ export default async function DashboardPage() {
   // 1. Trapdoor Sequence: Read Database explicitly to determine true Onboarding State
   const { data: profile } = await (supabase as any)
     .from("profiles")
-    .select("onboarding_completed, display_name, username")
+    .select("onboarding_completed, display_name, username, is_public")
     .eq("id", user.id)
     .single();
 
@@ -31,7 +33,7 @@ export default async function DashboardPage() {
     .eq("id", user.id)
     .single();
 
-  const isPro = features?.tier === "pro";
+  const isPro = features?.tier === "professional" || features?.tier === "deluxe";
 
   return (
     <div
@@ -51,9 +53,7 @@ export default async function DashboardPage() {
           backgroundColor: colors.white,
         }}
       >
-        <span style={{ fontFamily: fonts.heading, fontSize: "18px", letterSpacing: "0.15em" }}>
-          POSE & POISE
-        </span>
+        <PosePoiseLogo />
         
         <form action="/auth/signout" method="POST">
           <button
@@ -73,6 +73,11 @@ export default async function DashboardPage() {
       </header>
 
       <main style={{ padding: "4rem 2rem", maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+        <PublishToggle 
+          initialIsPublic={profile?.is_public || false} 
+          username={profile?.username || ""} 
+        />
+
         <div 
           style={{
             backgroundColor: colors.white,
@@ -110,6 +115,26 @@ export default async function DashboardPage() {
             {user.email}<br /><br />
             <strong>Authenticated Profile:</strong><br />
             {profile?.display_name || profile?.username || "Unnamed User"}
+          </div>
+
+          <div style={{ marginTop: "2rem" }}>
+            <Link 
+              href="/dashboard/portfolio-editor"
+              style={{
+                display: "inline-block",
+                padding: "0.875rem 2rem",
+                backgroundColor: colors.camel,
+                color: colors.white,
+                textDecoration: "none",
+                borderRadius: "6px",
+                fontSize: "14px",
+                fontWeight: 600,
+                letterSpacing: "0.05em",
+                transition: "opacity 0.2s",
+              }}
+            >
+              Open Portfolio Manager →
+            </Link>
           </div>
           
           <div style={{ marginTop: "3rem", paddingTop: "2rem", borderTop: `1px solid ${colors.border}` }}>

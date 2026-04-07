@@ -8,6 +8,34 @@ export async function proxy(request: NextRequest) {
     },
   })
 
+  // === Subdomain Routing Logic Merge ===
+  const url = request.nextUrl.clone()
+  const hostname = request.headers.get('host') || ""
+  const baseDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'poseandpoise.studio'
+  const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1')
+
+  if (!isLocalhost) {
+    const isSubdomain = 
+      hostname !== baseDomain && 
+      hostname !== `www.${baseDomain}` && 
+      hostname.endsWith(`.${baseDomain}`)
+
+    if (isSubdomain) {
+      const username = hostname.replace(`.${baseDomain}`, '')
+      
+      if (
+          username && 
+          username !== 'www' &&
+          !url.pathname.startsWith('/api') && 
+          !url.pathname.startsWith('/_next')
+      ) {
+        // We rewrite to the dynamic profile route
+        supabaseResponse = NextResponse.rewrite(new URL(`/${username}${url.pathname}`, request.url))
+      }
+    }
+  }
+
+  // === Supabase SSR Auth Logic ===
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -30,8 +58,6 @@ export async function proxy(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-
-  const url = request.nextUrl.clone()
 
   // Define explicitly defined routing boundaries for Phase 2 Tier Security
   const isAuthPage = url.pathname.startsWith('/login') || url.pathname.startsWith('/signup')

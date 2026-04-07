@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PosePoiseLogo } from '../common/PosePoiseLogo';
 import { Upload, X, Check } from 'lucide-react';
 import './OnboardingFlowNew.css';
 
@@ -28,9 +29,37 @@ const XIconSocial = () => (
   </svg>
 );
 
+interface OnboardingImage {
+  id: string;
+  file: File;
+  preview: string;
+  name: string;
+}
+
+interface OnboardingFormData {
+  professionalName: string;
+  overline: string;
+  bio: string;
+  instagram: string;
+  facebook: string;
+  tiktok: string;
+  twitter: string;
+  hourlyRate: string;
+  dayRate: string;
+  services: string;
+  height: string;
+  bust: string;
+  waist: string;
+  hips: string;
+  shoeSize: string;
+  hairColor: string;
+  eyeColor: string;
+  images: OnboardingImage[];
+}
+
 export default function OnboardingFlow() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<OnboardingFormData>({
     professionalName: '',
     overline: '',
     bio: '',
@@ -58,7 +87,10 @@ export default function OnboardingFlow() {
     { id: 3, name: 'Asset Library', required: true }
   ];
 
-  const updateField = (field, value) => {
+  const updateField = <K extends keyof OnboardingFormData>(
+    field: K,
+    value: OnboardingFormData[K]
+  ) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -90,10 +122,10 @@ export default function OnboardingFlow() {
     }
   };
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const newImages = files.map(file => ({
-      id: Math.random().toString(36).substr(2, 9),
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const newImages: OnboardingImage[] = files.map(file => ({
+      id: Math.random().toString(36).substring(2, 11),
       file,
       preview: URL.createObjectURL(file),
       name: file.name
@@ -101,15 +133,15 @@ export default function OnboardingFlow() {
     updateField('images', [...formData.images, ...newImages]);
   };
 
-  const removeImage = (id) => {
-    updateField('images', formData.images.filter(img => img.id !== id));
+  const removeImage = (id: string) => {
+    updateField('images', formData.images.filter((img: OnboardingImage) => img.id !== id));
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
-    const newImages = files.map(file => ({
-      id: Math.random().toString(36).substr(2, 9),
+    const newImages: OnboardingImage[] = files.map(file => ({
+      id: Math.random().toString(36).substring(2, 11),
       file,
       preview: URL.createObjectURL(file),
       name: file.name
@@ -119,14 +151,12 @@ export default function OnboardingFlow() {
 
   return (
     <div className="onboarding-container">
-      <header className="onboarding-header">
-        <p className="header-welcome">
+      <header className="onboarding-header flex flex-col items-center">
+        <p className="header-welcome mb-4 opacity-50 uppercase tracking-[0.3em] text-[10px] font-black">
           Welcome to
         </p>
-        <h1 className="header-title">
-          Pose & Poise
-        </h1>
-        <p className="header-subtitle">
+        <PosePoiseLogo />
+        <p className="header-subtitle mt-6 opacity-40 text-xs font-medium">
           Let's set up your professional portfolio
         </p>
       </header>

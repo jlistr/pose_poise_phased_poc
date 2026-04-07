@@ -623,8 +623,6 @@ export function useOnboardingData({
             (tfpAvailable ? 1 : 0)
           );
         }
-        case "template":
-          return data.selectedTemplate ? 1 : 0;
         case "photos":
           return data.photos.length;
         default:

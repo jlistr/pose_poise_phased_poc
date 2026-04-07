@@ -17,7 +17,6 @@ import {
   PhotosStep,
   ProfileStep,
   ServicesStep,
-  TemplateStep,
 } from "./steps";
 // Types
 import {
@@ -95,7 +94,6 @@ const RocketIcon: React.FC<{ size?: number }> = ({ size = 16 }) => (
 // ============================================================================
 
 const STEPS: OnboardingStep[] = [
-  "template",
   "photos",
   "profile",
   "services",
@@ -103,7 +101,6 @@ const STEPS: OnboardingStep[] = [
 ];
 
 const STEP_LABELS: Record<OnboardingStep, string> = {
-  template: "TEMPLATE",
   photos: "PHOTOS",
   profile: "PROFILE",
   services: "SERVICES",
@@ -132,7 +129,7 @@ export function OnboardingWizard({
   existingPhotos,
 }: OnboardingWizardProps): React.JSX.Element {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState<OnboardingStep>("template");
+  const [currentStep, setCurrentStep] = useState<OnboardingStep>("photos");
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<
@@ -185,10 +182,6 @@ export function OnboardingWizard({
   // Save current step data before navigating away
   const saveCurrentStepData = useCallback(async () => {
     switch (currentStep) {
-      case "template":
-        // Explicitly save template when leaving the step (backup for auto-save)
-        await saveTemplate();
-        break;
       case "profile":
         await saveProfile();
         break;
@@ -256,21 +249,6 @@ export function OnboardingWizard({
     } else if (!/^[a-z0-9_-]+$/.test(data.profile.username)) {
       errors.username =
         "Username can only contain lowercase letters, numbers, hyphens, and underscores";
-    }
-
-    // Validate template selection
-    if (
-      !data.selectedTemplate ||
-      !VALID_TEMPLATES.includes(data.selectedTemplate)
-    ) {
-      errors.template = "Please select a template";
-      // If template is invalid, set a default and navigate to template step
-      if (!data.selectedTemplate) {
-        updateSelectedTemplate("altar");
-      }
-      setValidationErrors(errors);
-      setCurrentStep("template");
-      return false;
     }
 
     if (Object.keys(errors).length > 0) {
@@ -501,14 +479,6 @@ export function OnboardingWizard({
         return <AboutStep data={data.about} onChange={updateAbout} />;
       case "services":
         return <ServicesStep data={data.services} onChange={updateServices} />;
-      case "template":
-        return (
-          <TemplateStep
-            selectedTemplate={data.selectedTemplate}
-            onSelectTemplate={updateSelectedTemplate}
-            modelName={data.profile.displayName}
-          />
-        );
       case "photos":
         return (
           <PhotosStep

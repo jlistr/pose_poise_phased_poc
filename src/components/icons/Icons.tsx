@@ -5,11 +5,7 @@ interface IconProps {
   style?: React.CSSProperties;
 }
 
-export function AvatarIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function AvatarIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -31,11 +27,7 @@ export function AvatarIcon({
   );
 }
 
-export function CameraIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function CameraIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -57,11 +49,7 @@ export function CameraIcon({
   );
 }
 
-export function CompCardIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function CompCardIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -71,60 +59,16 @@ export function CompCardIcon({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <rect
-        x="3"
-        y="3"
-        width="18"
-        height="18"
-        rx="2"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <rect
-        x="5"
-        y="5"
-        width="8"
-        height="10"
-        rx="1"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <rect
-        x="15"
-        y="5"
-        width="4"
-        height="4"
-        rx="0.5"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <rect
-        x="15"
-        y="11"
-        width="4"
-        height="4"
-        rx="0.5"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <line
-        x1="5"
-        y1="18"
-        x2="19"
-        y2="18"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
+      <rect x="3" y="3" width="18" height="18" rx="2" stroke={color} strokeWidth="1.5" />
+      <rect x="5" y="5" width="8" height="10" rx="1" stroke={color} strokeWidth="1.5" />
+      <rect x="15" y="5" width="4" height="4" rx="0.5" stroke={color} strokeWidth="1.5" />
+      <rect x="15" y="11" width="4" height="4" rx="0.5" stroke={color} strokeWidth="1.5" />
+      <line x1="5" y1="18" x2="19" y2="18" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
 
-export function AnalyticsIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function AnalyticsIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -134,48 +78,15 @@ export function AnalyticsIcon({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <path
-        d="M4 20H20"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <rect
-        x="6"
-        y="10"
-        width="3"
-        height="10"
-        rx="1"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <rect
-        x="10.5"
-        y="6"
-        width="3"
-        height="14"
-        rx="1"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <rect
-        x="15"
-        y="13"
-        width="3"
-        height="7"
-        rx="1"
-        stroke={color}
-        strokeWidth="1.5"
-      />
+      <path d="M4 20H20" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <rect x="6" y="10" width="3" height="10" rx="1" stroke={color} strokeWidth="1.5" />
+      <rect x="10.5" y="6" width="3" height="14" rx="1" stroke={color} strokeWidth="1.5" />
+      <rect x="15" y="13" width="3" height="7" rx="1" stroke={color} strokeWidth="1.5" />
     </svg>
   );
 }
 
-export function EditIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function EditIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -203,11 +114,7 @@ export function EditIcon({
   );
 }
 
-export function DeleteIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function DeleteIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -217,24 +124,9 @@ export function DeleteIcon({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <path
-        d="M4 7H20"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M10 11V17"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M14 11V17"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
+      <path d="M4 7H20" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M10 11V17" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M14 11V17" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
         d="M5 7L6 19C6 20.1046 6.89543 21 8 21H16C17.1046 21 18 20.1046 18 19L19 7"
         stroke={color}
@@ -253,11 +145,7 @@ export function DeleteIcon({
   );
 }
 
-export function CheckIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function CheckIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -278,11 +166,7 @@ export function CheckIcon({
   );
 }
 
-export function HourglassIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function HourglassIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -328,11 +212,7 @@ export function HourglassIcon({
   );
 }
 
-export function EyeIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function EyeIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -354,11 +234,7 @@ export function EyeIcon({
   );
 }
 
-export function EyeOffIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function EyeOffIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -379,11 +255,7 @@ export function EyeOffIcon({
   );
 }
 
-export function ChevronDownIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function ChevronDownIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -404,11 +276,7 @@ export function ChevronDownIcon({
   );
 }
 
-export function LockIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function LockIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -437,11 +305,7 @@ export function LockIcon({
   );
 }
 
-export function ArrowLeftIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function ArrowLeftIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -462,11 +326,7 @@ export function ArrowLeftIcon({
   );
 }
 
-export function ExternalLinkIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function ExternalLinkIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -501,11 +361,7 @@ export function ExternalLinkIcon({
   );
 }
 
-export function TemplatesIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function TemplatesIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
@@ -563,11 +419,7 @@ export function TemplatesIcon({
   );
 }
 
-export function PortfolioEditorIcon({
-  size = 24,
-  color = "currentColor",
-  className,
-}: IconProps) {
+export function PortfolioEditorIcon({ size = 24, color = "currentColor", className }: IconProps) {
   return (
     <svg
       width={size}
